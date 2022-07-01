@@ -1,41 +1,35 @@
 package dto;
 
 import enumeration.SemesterType;
-import java.time.Year;
 import util.ValidatorUtil;
-import dto.student.BaseStudent;
+
+import java.time.Year;
 
 public class SemesterResult {
-  private SemesterType semesterType;
+
+  private SemesterType semester;
+
   private Year year;
   private float average;
-  private BaseStudent baseStudent;
 
-  public SemesterResult(SemesterType semesterType, Year year, float average) {
-    this.semesterType = semesterType;
-    this.year = year;
-    this.average = average;
+  public SemesterResult(SemesterType semester, Year year, float average) {
+    setSemester(semester);
+    setYear(year);
+    setAverage(average);
   }
 
-  public SemesterType getSemesterType() {
-    return semesterType;
+  public SemesterType getSemester() {
+
+    return semester;
   }
 
-  public void setSemesterType(SemesterType semesterType) {
-    this.semesterType = semesterType;
-  }
+  public void setSemester(SemesterType semester) {
 
-  public Year getYear() {
-    return year;
-  }
-
-  public void setYear(Year year) {
-    if (ValidatorUtil.checkValidEntryYear(year) || year.isAfter(baseStudent.getEntryYear())){
-      this.year = year;
-    }
+    this.semester = semester;
   }
 
   public float getAverage() {
+
     return average;
   }
 
@@ -45,12 +39,18 @@ public class SemesterResult {
     }
   }
 
+
   @Override
   public String toString() {
-    return "SemesterResult{" +
-        "semesterType=" + getSemesterType() +
-        ", year=" + getYear() +
-        ", average=" + getAverage() +
-        '}';
+    return "Result{" + "semester=" + semester +
+            ", year=" + year + ", average=" + average + '}';
+  }
+
+  public Year getYear() {
+    return year;
+  }
+
+  public void setYear(Year year) {
+    this.year = year;
   }
 }

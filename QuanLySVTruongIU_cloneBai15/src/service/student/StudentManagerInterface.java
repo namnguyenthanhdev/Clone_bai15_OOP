@@ -1,6 +1,6 @@
 package service.student;
 
-import dto.Department;
+import dto.InServicePlace;
 import dto.student.BaseStudent;
 import dto.student.InServiceStudent;
 import enumeration.DepartmentType;
@@ -9,7 +9,13 @@ import java.time.Year;
 import java.util.List;
 
 public interface StudentManagerInterface {
+
   boolean isRegularStudent(String studentId);
+
+  boolean isInServiceStudent(String studentId);
+
+  //TODO: remove after test
+  void printMapStudents();
 
   BaseStudent addNewStudent(BaseStudent baseStudent);
 
@@ -18,13 +24,14 @@ public interface StudentManagerInterface {
   int getTotalRegularStudentByDepartment(DepartmentType departmentType);
 
   List<InServiceStudent> getInServiceStudentListByDepartmentTypeAndInServicePlace(
-      DepartmentType departmentType, String inServiceAddress);
+      DepartmentType departmentType,
+      String inServicePlaceAddress);
 
-  List<BaseStudent> getAverageScoreHigherThanEightInRecentSemesterByDepartmentType(
-      DepartmentType departmentType);
+  List<BaseStudent> getAverageScoreBiggerThanEightInRecentSemesterByDepartmentType(DepartmentType departmentType);
 
   List<BaseStudent> getMaxAverageScoreStudentFromAllSemester(DepartmentType departmentType);
 
   List<BaseStudent> sortStudentAscendingByScoreAndDescendingByYear(DepartmentType departmentType);
+
 
 }

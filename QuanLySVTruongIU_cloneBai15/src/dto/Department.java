@@ -1,11 +1,14 @@
 package dto;
 
-import com.google.gson.Gson;
 import dto.student.BaseStudent;
 import enumeration.DepartmentType;
+import com.google.gson.Gson;
+
+
 import java.util.List;
 
 public class Department {
+
   private DepartmentType name;
   private List<BaseStudent> baseStudents;
 
@@ -19,6 +22,7 @@ public class Department {
   }
 
   public void setName(DepartmentType name) {
+
     this.name = name;
   }
 
@@ -27,14 +31,16 @@ public class Department {
   }
 
   public void setBaseStudents(List<BaseStudent> baseStudents) {
+
     this.baseStudents = baseStudents;
   }
 
   @Override
   public String toString() {
+    Gson gson = new Gson();
     return "Department{" +
-        "name=" + getName() +
-        ", baseStudents=" + new Gson().toJson(getBaseStudents()) +
+        "name=" + name +
+        ", students=" + gson.toJson(baseStudents) +
         '}';
   }
 }

@@ -5,6 +5,7 @@ import enumeration.DepartmentType;
 import enumeration.SemesterType;
 import exception.InvalidEntryYearException;
 import exception.InvalidStudentIdException;
+
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,34 +13,41 @@ import java.util.concurrent.atomic.AtomicReference;
 import util.ValidatorUtil;
 
 public abstract class BaseStudent {
+
+
   private String id;
-  private String name;
   private float entryScore;
-  private Year entryYear;
   private DepartmentType departmentType;
+
+  private Year entryYear;
+
   private List<SemesterResult> semesterResults = new ArrayList<>();
 
+
   private static int currentStudentIdGenerator = 0;
+
   private static final String STUDENT_ID_PREFIX = "STD_";
 
-  protected static String generateNewStudentId(){
+
+  protected static String generateNewStudentId() {
     currentStudentIdGenerator += 1;
     return STUDENT_ID_PREFIX + currentStudentIdGenerator;
   }
 
-  public static void checkValidId(String id){
-    if (id == null || !id.startsWith(STUDENT_ID_PREFIX)){
+  public static void checkValidId(String id) {
+    if (id == null || !id.startsWith(STUDENT_ID_PREFIX)) {
       throw new InvalidStudentIdException(id);
     }
   }
-  public BaseStudent(String id, String name, float entryScore, Year entryYear,
-      DepartmentType departmentType, List<SemesterResult> semesterResults) {
+
+
+  public BaseStudent(String id, float entryScore, List<SemesterResult> semesterResults, DepartmentType departmentType,
+      Year entryYear) {
     this.id = id;
-    setName(name);
-    setEntryScore(entryScore);
     setEntryYear(entryYear);
-    setDepartmentType(departmentType);
+    setEntryScore(entryScore);
     setSemesterResults(semesterResults);
+    setDepartmentType(departmentType);
   }
 
   public String getId() {
@@ -50,31 +58,25 @@ public abstract class BaseStudent {
     this.id = id;
   }
 
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
   public float getEntryScore() {
     return entryScore;
   }
 
   public void setEntryScore(float entryScore) {
-    if(ValidatorUtil.checkValidScore(entryScore)) {
+    if (ValidatorUtil.checkValidScore(entryScore)) {
       this.entryScore = entryScore;
     }
   }
 
-  public Year getEntryYear() {
-    return entryYear;
+  public List<SemesterResult> getSemesterResults() {
+    return semesterResults;
   }
 
-  public void setEntryYear(Year entryYear){
-    if (ValidatorUtil.checkValidEntryYear(entryYear)){
-      this.entryYear = entryYear;
+  public void setSemesterResults(List<SemesterResult> semesterResults) {
+    if (semesterResults == null) {
+      this.semesterResults = new ArrayList<>();
+    } else {
+      this.semesterResults = semesterResults;
     }
   }
 
@@ -86,25 +88,21 @@ public abstract class BaseStudent {
     this.departmentType = departmentType;
   }
 
-  public List<SemesterResult> getSemesterResults() {
-    return semesterResults;
+  public Year getEntryYear() {
+    return entryYear;
+  }
+
+  public void setEntryYear(Year entryYear) {
+    this.entryYear = entryYear;
   }
 
   public float getMaxAverageScoreOfStudent() {
     AtomicReference<Float> maxScore = new AtomicReference<>((float) 0);
     semesterResults.forEach(semesterResult -> {
-      if(maxScore.get() < semesterResult.getAverage()){
+      if (maxScore.get() < semesterResult.getAverage()) {
         maxScore.set(semesterResult.getAverage());
       }
     });
     return maxScore.get();
-  }
-
-  public void setSemesterResults(List<SemesterResult> semesterResultList) {
-    if (semesterResults == null){
-      this.semesterResults = new ArrayList<>();
-    } else{
-      this.semesterResults = semesterResultList;
-    }
   }
 }

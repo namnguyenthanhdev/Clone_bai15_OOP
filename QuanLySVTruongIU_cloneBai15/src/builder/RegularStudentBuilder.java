@@ -3,25 +3,27 @@ package builder;
 import dto.SemesterResult;
 import dto.student.RegularStudent;
 import enumeration.DepartmentType;
+
 import java.time.Year;
-import java.util.ArrayList;
 import java.util.List;
 
 public class RegularStudentBuilder {
+
   private String id;
-  private String name;
   private float entryScore;
-  private Year entryYear;
+  private List<SemesterResult> semesterResults;
+
   private DepartmentType departmentType;
-  private List<SemesterResult> semesterResults = new ArrayList<>();
+  private Year entryYear;
 
   public RegularStudentBuilder setId(String id) {
     this.id = id;
     return this;
   }
 
-  public RegularStudentBuilder setName(String name) {
-    this.name = name;
+
+  public RegularStudentBuilder setSemesterResults(List<SemesterResult> semesterResults) {
+    this.semesterResults = semesterResults;
     return this;
   }
 
@@ -40,12 +42,7 @@ public class RegularStudentBuilder {
     return this;
   }
 
-  public RegularStudentBuilder setSemesterResults(List<SemesterResult> semesterResults) {
-    this.semesterResults = semesterResults;
-    return this;
-  }
-
-  public RegularStudent build(){
-    return new RegularStudent(this.id, this.name, this.entryScore, this.entryYear, this.departmentType, this.semesterResults);
+  public RegularStudent build() {
+    return new RegularStudent(this.id, this.entryScore, this.semesterResults, this.entryYear, this.departmentType);
   }
 }

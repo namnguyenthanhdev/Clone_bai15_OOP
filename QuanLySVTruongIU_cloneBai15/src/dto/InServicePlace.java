@@ -1,46 +1,45 @@
 package dto;
 
-import exception.InvalidPlaceIdException;
-import exception.InvalidStudentIdException;
-import util.ValidatorUtil;
-
 public class InServicePlace {
-  private String id;
+
+  private static int generatorId = 0;
+
+  private static final String ID_PREFIX = "PLACE_";
+
+
+  protected static String generateId() {
+    generatorId += 1;
+    return ID_PREFIX + generatorId;
+  }
+
+
+  private String placeId;
   private String address;
+
   private String contactNumber;
 
-  private static int currentPlaceIdGenerator = 0;
-  private static final String PLACE_ID_PREFIX = "PLACE_";
-
-  protected static String generateNewPlaceId(){
-    currentPlaceIdGenerator += 1;
-    return PLACE_ID_PREFIX + currentPlaceIdGenerator;
+  public static InServicePlace createNewPlace(String address, String contactNumber) {
+    return new InServicePlace(generateId(), address, contactNumber);
   }
 
-  public static void checkValidId(String id){
-    if (id == null || !id.startsWith(PLACE_ID_PREFIX)){
-      throw new InvalidPlaceIdException(id);
-    }
+  public static InServicePlace createNewPlace(InServicePlace dto) {
+    return new InServicePlace(generateId(), dto.getAddress(), dto.getContactNumber());
   }
 
-  public InServicePlace(String id, String address, String contactNumber) {
-    this.id = id;
+
+  public InServicePlace(String placeId, String address, String contactNumber) {
+    setPlaceId(placeId);
     setAddress(address);
     setContactNumber(contactNumber);
   }
 
-  public static  InServicePlace createNewInServicePlace(String address, String contactNumber) {
-    return new InServicePlace(" ",address, contactNumber);
-  }
-  public static InServicePlace createNewInServicePlace(InServicePlace place) {
-    return new InServicePlace(generateNewPlaceId(), place.getAddress(), place.getContactNumber());
-  }
-  public String getId() {
-    return id;
+
+  public String getPlaceId() {
+    return placeId;
   }
 
-  public void setId(String id) {
-    this.id = id;
+  public void setPlaceId(String placeId) {
+    this.placeId = placeId;
   }
 
   public String getAddress() {
@@ -56,18 +55,6 @@ public class InServicePlace {
   }
 
   public void setContactNumber(String contactNumber) {
-    if (ValidatorUtil.checkValidContactNumber(contactNumber)){
-      this.contactNumber = contactNumber;
-    }
+    this.contactNumber = contactNumber;
   }
-
-  @Override
-  public String toString() {
-    return "InServicePlace{" +
-        "id='" + getId() + '\'' +
-        ", address='" + getAddress() + '\'' +
-        ", contactNumber='" + getContactNumber() + '\'' +
-        '}';
-  }
-
 }

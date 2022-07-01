@@ -1,58 +1,62 @@
 package builder;
 
-import dto.InServicePlace;
 import dto.SemesterResult;
 import dto.student.InServiceStudent;
-import dto.student.RegularStudent;
 import enumeration.DepartmentType;
+
 import java.time.Year;
-import java.util.ArrayList;
 import java.util.List;
 
 public class InServiceStudentBuilder {
-    private String id;
-    private String name;
-    private float entryScore;
-    private Year entryYear;
-    private DepartmentType departmentType;
-    private List<SemesterResult> semesterResults = new ArrayList<>();
-    private String placeId;
 
-    public  InServiceStudentBuilder setId(String id) {
-      this.id = id;
-      return this;
-    }
+  private String id;
+  private float entryScore;
+  private List<SemesterResult> semesterResults;
 
-    public InServiceStudentBuilder setName(String name) {
-      this.name = name;
-      return this;
-    }
+  private String inServicePlaceId;
 
-    public InServiceStudentBuilder setEntryScore(float entryScore) {
-      this.entryScore = entryScore;
-      return this;
-    }
+  private DepartmentType departmentType;
+  private Year entryYear;
 
-    public InServiceStudentBuilder setEntryYear(Year entryYear) {
-      this.entryYear = entryYear;
-      return this;
-    }
+  public InServiceStudentBuilder() {
+  }
 
-    public InServiceStudentBuilder setDepartmentType(DepartmentType departmentType) {
-      this.departmentType = departmentType;
-      return this;
-    }
-
-    public InServiceStudentBuilder setSemesterResults(List<SemesterResult> semesterResults) {
-      this.semesterResults = semesterResults;
-      return this;
-    }
-  public InServiceStudentBuilder setInServicePlaceId(String placeId) {
-    this.placeId = placeId;
+  public InServiceStudentBuilder setId(String id) {
+    this.id = id;
     return this;
   }
 
-    public InServiceStudent build(){
-      return new InServiceStudent(this.id, this.name, this.entryScore, this.entryYear, this.departmentType, this.semesterResults, this.placeId);
-    }
+
+  public InServiceStudentBuilder setSemesterResults(List<SemesterResult> semesterResults) {
+    this.semesterResults = semesterResults;
+    return this;
+  }
+
+  public InServiceStudentBuilder setEntryScore(float entryScore) {
+    this.entryScore = entryScore;
+    return this;
+  }
+
+
+  public InServiceStudentBuilder setInServicePlaceId(String inServicePlaceId) {
+    this.inServicePlaceId = inServicePlaceId;
+    return this;
+  }
+
+  public InServiceStudentBuilder setEntryYear(Year entryYear) {
+    this.entryYear = entryYear;
+    return this;
+  }
+
+  public InServiceStudentBuilder setDepartmentType(DepartmentType departmentType) {
+    this.departmentType = departmentType;
+    return this;
+  }
+
+  public InServiceStudent build() {
+    return new InServiceStudent(this.id, this.entryScore, this.semesterResults, this.entryYear, this.departmentType,
+        this.inServicePlaceId);
+  }
+
+
 }

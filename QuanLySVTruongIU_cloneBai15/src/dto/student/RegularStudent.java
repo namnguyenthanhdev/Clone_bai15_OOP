@@ -1,40 +1,32 @@
 package dto.student;
 
 import com.google.gson.Gson;
+
 import dto.SemesterResult;
 import enumeration.DepartmentType;
-import exception.InvalidStudentIdException;
+
 import java.time.Year;
-import java.util.ArrayList;
 import java.util.List;
-import util.ValidatorUtil;
 
-public class RegularStudent extends BaseStudent{
+public class RegularStudent extends BaseStudent {
 
-  public RegularStudent(String id, String name, float entryScore, Year entryYear,
-      DepartmentType departmentType, List<SemesterResult> semesterResults) {
-    super(id, name, entryScore, entryYear, departmentType, semesterResults);
+  public RegularStudent(String id, float entryScore, List<SemesterResult> results, Year entryYear,
+      DepartmentType departmentType) {
+    super(id, entryScore, results, departmentType, entryYear);
   }
 
-  public RegularStudent(RegularStudent student) {
-    super(student.getId(), student.getName(), student.getEntryScore(), student.getEntryYear(),
-        student.getDepartmentType(), student.getSemesterResults());
-  }
 
-  public static RegularStudent createNewStudent(RegularStudent student){
-    student.setId(generateNewStudentId());
-    return new RegularStudent(student);
+  public static RegularStudent createNewStudent(RegularStudent dto) {
+    return new RegularStudent(generateNewStudentId(), dto.getEntryScore(), dto.getSemesterResults(), dto.getEntryYear(),
+        dto.getDepartmentType());
   }
 
   @Override
-  public String toString(){
-    return this.getDepartmentType() + ": " +
-        "Regular{" +
+  public String toString() {
+    return "Regular{" +
         "id='" + this.getId() + '\'' +
-        ", name='" + this.getName() + '\'' +
         ", entryScore='" + this.getEntryScore() + '\'' +
-        ", entryYear='" + this.getEntryYear() + '\'' +
-        ", results='" + new Gson().toJson(this.getSemesterResults()) + '\'' +
+        ", results={" + new Gson().toJson(this.getSemesterResults()) + '}' +
         '}';
   }
 }
